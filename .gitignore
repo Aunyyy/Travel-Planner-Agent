@@ -1,0 +1,8 @@
+backend/node_modules/
+frontend/node_modules/
+.env
+frontend/react/src/assets/
+
+# Ignore Python cache folders and compiled files
+**/__pycache__/
+*.py[cod]
