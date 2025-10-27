@@ -2,7 +2,8 @@ backend/node_modules/
 frontend/node_modules/
 .env
 frontend/react/src/assets/
-
+structure.txt
+backend/api_cllients/response.txt
 # Ignore Python cache folders and compiled files
 **/__pycache__/
 *.py[cod]
