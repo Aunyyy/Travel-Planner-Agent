@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { FlightInfo } from "../types";
-// @ts-ignore
-import airlineCodes from "airline-codes";
+import { FlightSeg } from "./FlightSeg";
 
 export const Flights = ({ flights }: { flights: FlightInfo[] }) => {
   const [selectedDate, setSelectedDate] = useState<string | undefined>(
@@ -9,6 +8,12 @@ export const Flights = ({ flights }: { flights: FlightInfo[] }) => {
   );
 
   const selectedFlights = flights.find((f) => f.date === selectedDate);
+
+  const formatDuration = (iso: string) => {
+    const h = iso.match(/(\d+)H/)?.[1] || "0";
+    const m = iso.match(/(\d+)M/)?.[1] || "0";
+    return `${h}h ${m}m`;
+  };
 
   if (!flights || flights.length === 0) {
     return (
@@ -44,34 +49,31 @@ export const Flights = ({ flights }: { flights: FlightInfo[] }) => {
               No flights found for this date.
             </p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {selectedFlights.flights.map((f, i) => (
                 <div
                   key={i}
-                  className="p-4 border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+                  className="p-5 border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 bg-white"
                 >
-                  <div className="flex justify-between items-center">
-                    <h4 className="font-semibold">{(airlineCodes.findWhere({ iata: f.airline })).get("name")}</h4>
-                    <span className="text-blue-600 font-medium">
-                      {f.price} {f.currency}
-                    </span>
+                  {/* Header Section */}
+                  <div className="flex justify-between items-center mb-3">
+                    <div>
+                      <p className="text-sm text-gray-500">
+                        Total Duration: {formatDuration(f.total_duration)}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold text-blue-600">
+                        {f.currency} {f.price}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 mt-2 text-sm text-gray-700">
-                    <div>
-                      <p className="font-medium">From:</p>
-                      <p>{f.departure}</p>
-                      <p className="text-xs text-gray-500">
-                        {f.departure_time}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-medium">To:</p>
-                      <p>{f.arrival}</p>
-                      <p className="text-xs text-gray-500">
-                        {f.arrival_time}
-                      </p>
-                    </div>
+                  {/* Itinerary Segments */}
+                  <div className="divide-y divide-gray-100">
+                    {f.itinerary.map((segment, idx) => (
+                      <FlightSeg key={idx} segment={segment} />
+                    ))}
                   </div>
                 </div>
               ))}

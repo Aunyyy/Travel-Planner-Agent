@@ -8,7 +8,6 @@ load_dotenv()
 
 AMADEUS_API_KEY = os.getenv("AMADEUS_API_KEY")
 AMADEUS_API_SECRET = os.getenv("AMADEUS_API_SECRET")
-# AMADEUS_ACCESS_TOKEN = os.getenv("AMADEUS_ACCESS_TOKEN")
 
 amadeus = Client(
     client_id=AMADEUS_API_KEY,
@@ -27,22 +26,38 @@ async def fetch_flights_in_week(origin: str, destination: str, start_date: str):
                adults=1,
                max=3,
                currencyCode="USD",
-            ).data
+            ).result
 
       try:
-            data = await loop.run_in_executor(None, _fetch)
+            result = await loop.run_in_executor(None, _fetch)
+            data = result["data"]
+            data_dict = result["dictionaries"]
             flights = []
             for f in data:
-               seg = f["itineraries"][0]["segments"][0]
                flights.append({
-                  "airline": f["validatingAirlineCodes"][0],
-                  "departure": seg["departure"]["iataCode"],
-                  "arrival": seg["arrival"]["iataCode"],
-                  "departure_time": seg["departure"]["at"],
-                  "arrival_time": seg["arrival"]["at"],
                   "price": f["price"]["total"],
-                  "currency": f["price"]["currency"]
+                  "currency": f["price"]["currency"],
+                  "total_duration": f["itineraries"][0].get("duration"),
+                  "itinerary": []
                })
+
+               for flight in f["itineraries"][0]["segments"]:
+                    aircraft_code = flight.get("aircraft")["code"]
+                    airline_IATA = flight["carrierCode"]
+                    flights[-1]["itinerary"].append(
+                         {
+                           "departure": flight["departure"]["iataCode"],
+                           "departure_terminal": flight["departure"].get("terminal"),
+                           "arrival": flight["arrival"]["iataCode"],
+                           "arrival_terminal": flight["arrival"].get("terminal"),
+                           "departure_time": flight["departure"]["at"],
+                           "arrival_time": flight["arrival"]["at"],
+                           "airline": data_dict["carriers"][airline_IATA],
+                           "aircraft": data_dict.get("aircraft").get(aircraft_code),
+                           "duration": flight["duration"],
+                         }
+                    )
+                    
             return {"date": date.strftime("%Y-%m-%d"), "flights": flights}
       except ResponseError as e:
             return {"date": date.strftime("%Y-%m-%d"), "error": str(e)}

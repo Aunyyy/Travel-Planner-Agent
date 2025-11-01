@@ -1,9 +1,6 @@
 from models.agent import OrchestratorState
 from api_cllients.amadeus_client import fetch_flights_in_week
 from datetime import datetime
-import airportsdata
-
-airports = airportsdata.load('IATA')
 
 async def run_flights_agent(state: OrchestratorState):
     """

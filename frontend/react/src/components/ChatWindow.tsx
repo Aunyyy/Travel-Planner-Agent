@@ -22,7 +22,7 @@ export default function ChatWindow() {
   async function handleSend(text: string) {
     const newMessage: Message = { role: "user", content: text };
     const newMessages: Message[] = [...messages, newMessage];
-    setMessages(newMessages); 
+    setMessages(newMessages);
 
     try {
       let assistantMessages: Message[] = [];
@@ -34,9 +34,9 @@ export default function ChatWindow() {
         const destination: string = res.data.destination || "";
 
         if (images.length > 0) {
-          assistantMessages.push({role: "assistant", content: `Here is some information about ${destination}:`})
-          assistantMessages.push({role: "assistant", content: description})
-          assistantMessages.push({role: "assistant", content: images})
+          assistantMessages.push({ role: "assistant", content: `Here is some information about ${destination}:` })
+          assistantMessages.push({ role: "assistant", content: description })
+          assistantMessages.push({ role: "assistant", content: images })
         }
       }
       else if (res.data.next_agent === "flight_agent") {
@@ -45,8 +45,8 @@ export default function ChatWindow() {
         const origin: string = res.data.origin || "";
 
         if (flightInfo) {
-          assistantMessages.push({role: "assistant", content: `Here are flights from ${origin} to ${destination}:`})
-          assistantMessages.push({role: "assistant", flights: flightInfo})
+          assistantMessages.push({ role: "assistant", content: `Here are flights from ${origin} to ${destination}:` })
+          assistantMessages.push({ role: "assistant", flights: flightInfo })
         }
       }
 
@@ -69,11 +69,161 @@ export default function ChatWindow() {
       // const res: string[] = [image1, image2, iamge3, image4, image5, image6, image7, image8, image9, image10];
       // const images: string[] = res || [];
 
-      // const mockFlights: FlightInfo[] = [{'date': '2025-10-30', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-10-30T09:45:00', 'arrival_time': '2025-10-30T11:06:00', 'price': '355.47', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-10-30T15:35:00', 'arrival_time': '2025-10-30T16:57:00', 'price': '355.47', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-10-30T06:15:00', 'arrival_time': '2025-10-30T07:48:00', 'price': '355.47', 'currency': 'EUR'}]}, {'date': '2025-10-31', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-10-31T18:09:00', 'arrival_time': '2025-10-31T19:30:00', 'price': '355.47', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-10-31T06:15:00', 'arrival_time': '2025-10-31T07:48:00', 'price': '355.47', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'ATL', 'departure_time': '2025-10-31T06:15:00', 'arrival_time': '2025-10-31T08:39:00', 'price': '355.47', 'currency': 'EUR'}]}, {'date': '2025-11-01', 'error': '[429]\n'}, {'date': '2025-11-02', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-02T18:09:00', 'arrival_time': '2025-11-02T19:30:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-02T06:15:00', 'arrival_time': '2025-11-02T07:48:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'ATL', 'departure_time': '2025-11-02T06:15:00', 'arrival_time': '2025-11-02T08:39:00', 'price': '321.87', 'currency': 'EUR'}]}, {'date': '2025-11-03', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-03T18:09:00', 'arrival_time': '2025-11-03T19:30:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-03T06:15:00', 'arrival_time': '2025-11-03T07:48:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'ATL', 'departure_time': '2025-11-03T06:15:00', 'arrival_time': '2025-11-03T08:39:00', 'price': '321.87', 'currency': 'EUR'}]}, {'date': '2025-11-04', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-04T06:15:00', 'arrival_time': '2025-11-04T07:48:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-04T12:15:00', 'arrival_time': '2025-11-04T13:30:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'ATL', 'departure_time': '2025-11-04T06:15:00', 'arrival_time': '2025-11-04T08:39:00', 'price': '321.87', 'currency': 'EUR'}]}, {'date': '2025-11-05', 'flights': [{'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-05T09:45:00', 'arrival_time': '2025-11-05T11:06:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-05T06:15:00', 'arrival_time': '2025-11-05T07:48:00', 'price': '321.87', 'currency': 'EUR'}, {'airline': 'WS', 'departure': 'YYZ', 'arrival': 'DTW', 'departure_time': '2025-11-05T12:15:00', 'arrival_time': '2025-11-05T13:30:00', 'price': '321.87', 'currency': 'EUR'}]}]
+      // const mockFlights: FlightInfo[] =
+      //   [
+      //     {
+      //       "date": "2025-11-21",
+      //       "flights": [
+      //         {
+      //           "price": "828.20",
+      //           "currency": "USD",
+      //           "total_duration": "PT25H35M",
+      //           "itinerary": [
+      //             {
+      //               "departure": "YYZ",
+      //               "departure_terminal": "1",
+      //               "arrival": "DXB",
+      //               "arrival_terminal": "3",
+      //               "departure_time": "2025-11-21T13:55:00",
+      //               "arrival_time": "2025-11-22T11:40:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "AIRBUS A380-800",
+      //               "duration": "PT12H45M"
+      //             },
+      //             {
+      //               "departure": "DXB",
+      //               "departure_terminal": "3",
+      //               "arrival": "ISB",
+      //               "arrival_terminal": null,
+      //               "departure_time": "2025-11-22T21:30:00",
+      //               "arrival_time": "2025-11-23T01:30:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT3H"
+      //             }
+      //           ]
+      //         },
+      //         {
+      //           "price": "915.53",
+      //           "currency": "USD",
+      //           "total_duration": "PT48H20M",
+      //           "itinerary": [
+      //             {
+      //               "departure": "YYZ",
+      //               "departure_terminal": "1",
+      //               "arrival": "BOS",
+      //               "arrival_terminal": "B",
+      //               "departure_time": "2025-11-21T20:55:00",
+      //               "arrival_time": "2025-11-21T22:37:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "AIRBUS  A220-300",
+      //               "duration": "PT1H42M"
+      //             },
+      //             {
+      //               "departure": "BOS",
+      //               "departure_terminal": "E",
+      //               "arrival": "DXB",
+      //               "arrival_terminal": "3",
+      //               "departure_time": "2025-11-22T22:10:00",
+      //               "arrival_time": "2025-11-23T19:20:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT12H10M"
+      //             },
+      //             {
+      //               "departure": "DXB",
+      //               "departure_terminal": "3",
+      //               "arrival": "ISB",
+      //               "arrival_terminal": null,
+      //               "departure_time": "2025-11-24T03:10:00",
+      //               "arrival_time": "2025-11-24T07:15:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT3H5M"
+      //             }
+      //           ]
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       "date": "2025-11-22",
+      //       "flights": [
+      //         {
+      //           "price": "828.20",
+      //           "currency": "USD",
+      //           "total_duration": "PT25H35M",
+      //           "itinerary": [
+      //             {
+      //               "departure": "YYZ",
+      //               "departure_terminal": "1",
+      //               "arrival": "DXB",
+      //               "arrival_terminal": "3",
+      //               "departure_time": "2025-11-21T13:55:00",
+      //               "arrival_time": "2025-11-22T11:40:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "AIRBUS A380-800",
+      //               "duration": "PT12H45M"
+      //             },
+      //             {
+      //               "departure": "DXB",
+      //               "departure_terminal": "3",
+      //               "arrival": "ISB",
+      //               "arrival_terminal": null,
+      //               "departure_time": "2025-11-22T21:30:00",
+      //               "arrival_time": "2025-11-23T01:30:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT3H"
+      //             }
+      //           ]
+      //         },
+      //         {
+      //           "price": "915.53",
+      //           "currency": "USD",
+      //           "total_duration": "PT48H20M",
+      //           "itinerary": [
+      //             {
+      //               "departure": "YYZ",
+      //               "departure_terminal": "1",
+      //               "arrival": "BOS",
+      //               "arrival_terminal": "B",
+      //               "departure_time": "2025-11-21T20:55:00",
+      //               "arrival_time": "2025-11-21T22:37:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "AIRBUS  A220-300",
+      //               "duration": "PT1H42M"
+      //             },
+      //             {
+      //               "departure": "BOS",
+      //               "departure_terminal": "E",
+      //               "arrival": "DXB",
+      //               "arrival_terminal": "3",
+      //               "departure_time": "2025-11-22T22:10:00",
+      //               "arrival_time": "2025-11-23T19:20:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT12H10M"
+      //             },
+      //             {
+      //               "departure": "DXB",
+      //               "departure_terminal": "3",
+      //               "arrival": "ISB",
+      //               "arrival_terminal": null,
+      //               "departure_time": "2025-11-24T03:10:00",
+      //               "arrival_time": "2025-11-24T07:15:00",
+      //               "airline": "EMIRATES",
+      //               "aircraft": "BOEING 777-300ER",
+      //               "duration": "PT3H5M"
+      //             }
+      //           ]
+      //         }
+      //       ]
+      //     }
+      //   ]
 
-      // assistantMessages.push({role: "assistant", content: `Here are flights from Toronto to Chicago:`})
-      // assistantMessages.push({role: "assistant", flights: mockFlights})
-      
+      // assistantMessages.push({ role: "assistant", content: `Here are flights from Toronto to Islamabad:` })
+      // assistantMessages.push({ role: "assistant", flights: mockFlights })
+
       setMessages([...newMessages, ...assistantMessages])
 
     } catch (error) {
@@ -82,15 +232,17 @@ export default function ChatWindow() {
   }
 
   return (
-    <div className="flex flex-col w-4/5">
-      <div className="flex-1 overflow-y-auto p-4">
+    <div className="relative min-h-screen w-4/5 mx-auto">
+      <div className="pb-28 p-4 space-y-2">
         {messages.map((m, i) => (
           <MessageBubble key={i} role={m.role} content={m.content} flights={m.flights} />
         ))}
       </div >
-      <ChatInput onSend={handleSend} />
-      <div className="flex justify-center text-xs p-2"> 
-         Traveler can make mistakes. Check important info.
+      <div className="fixed bottom-0 left-[10%] w-4/5 bg-white" >
+        <ChatInput onSend={handleSend} />
+        <div className="flex justify-center text-xs p-2">
+          Traveler can make mistakes. Check important info.
+        </div>
       </div>
     </div>
   );

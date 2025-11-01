@@ -1,11 +1,20 @@
+export interface FlightSegment{
+    departure: string
+    departure_terminal: string | null;
+    arrival: string
+    arrival_terminal: string | null;
+    departure_time: string
+    arrival_time: string
+    aircraft: string
+    airline: string
+    duration: string
+}
+
 interface Flight {
-  airline: string
-  departure: string
-  arrival: string
-  departure_time: string
-  arrival_time: string
   price: string
   currency: string
+  total_duration: string
+  itinerary: FlightSegment[]
 }
 
 export interface FlightInfo {

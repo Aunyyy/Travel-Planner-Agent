@@ -4,7 +4,6 @@ from agents.orchestrator_graph import compiled_graph
 from fastapi.responses import JSONResponse
 from models.agent import OrchestratorState
 from api_cllients.amadeus_client import fetch_flights_in_week
-import requests
 
 router = APIRouter()
 
@@ -47,17 +46,4 @@ async def get_flights(origin, destination, start_date):
 
    return JSONResponse (
       content={"flights_by_day": flights_this_week}
-)
-
-@router.get("/token")
-def get_token():
-    url = "https://test.api.amadeus.com/v1/security/oauth2/token"
-    payload = {
-        "grant_type": "client_credentials",
-        "client_id": "hh29WuKh45OxHFA0YehXkXzKkSCrQhpI",
-        "client_secret": "qrJzo5mPEsiZEsIU"
-    }
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-
-    response = requests.post(url, data=payload, headers=headers)
-    return response.json()
+    )

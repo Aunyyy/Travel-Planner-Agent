@@ -36,7 +36,7 @@ async def orchestrator_node(state:  OrchestratorState):
         "destination_IATA_code": "<destination city airports IATA code if next_agent == flight_agent>",
         "origin": "<city/airport if mentioned>",
         "origin_IATA_code": "<origin city airports IATA code if next_agent == flight_agent>",
-        "start_date": "<date if mentioned in %Y-%m-%d format>"
+        "start_date": "<date if mentioned> in %Y-%m-%d format"
     }}
 
     User query: "{user_message}"
