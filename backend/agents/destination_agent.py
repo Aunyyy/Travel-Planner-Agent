@@ -1,4 +1,5 @@
 import os
+import asyncio
 from langchain_openai import ChatOpenAI
 from models.agent import (
     OrchestratorState,
@@ -16,12 +17,13 @@ async def run_destination_agent(state: OrchestratorState):
    try:
       destination = state.destination
       prompt = f"Write a short, exciting travel description for {destination}."
-      description = (await llm.ainvoke(prompt)).content
-      images = await search_images(destination)
+
+      # Concurrent LLM and API calls for faster execution
+      description, images= await asyncio.gather(llm.ainvoke(prompt), search_images(destination))
 
       return {
          "destination": destination,
-         "description": description,
+         "description": description.content,
          "images": images,
       }
    except Exception as e:
